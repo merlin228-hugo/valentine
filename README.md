@@ -97,8 +97,7 @@ button {
 <body>
 
 <div class="container">
-    <img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
-    
+    <img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Cat">
     <h1 id="text">Екатерина, ты будешь моей валентинкой? 💖</h1>
 
     <div class="buttons">
@@ -106,6 +105,11 @@ button {
         <button id="noBtn">НЕТ 🙃</button>
     </div>
 </div>
+
+<!-- Музыка -->
+<audio id="loveMusic" preload="auto">
+    <source src="https://cdn.pixabay.com/audio/2022/10/03/audio_946c1c61a2.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 const texts = [
@@ -164,25 +168,67 @@ noBtn.addEventListener("click", () => {
 });
 
 yesBtn.addEventListener("click", () => {
+    // Включаем музыку
+    const music = document.getElementById("loveMusic");
+    music.volume = 0.6;
+    music.play();
+
+    if (navigator.vibrate) navigator.vibrate([100,50,100,50,200]);
+
     document.body.innerHTML = `
-        <div style="
-            height:100vh;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            padding:20px;
-            background:linear-gradient(180deg,#ff758c,#ff7eb3);
-            color:white;
-            font-size:28px;
-        ">
-            💘 УРААА 💘<br><br>
-            Ты моя валентинка 😍
-        </div>
+    <div id="final" style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        background:linear-gradient(180deg,#ff4d6d,#ff8fa3);
+        color:white;
+        font-family:-apple-system,Arial;
+        padding:20px;
+        animation: zoomIn 0.6s ease;
+    ">
+        <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" 
+        style="width:80%;max-width:320px;border-radius:20px;margin-bottom:20px;">
+
+        <h1 style="font-size:34px;margin:0;">УРАААА 💘</h1>
+        <h2 style="font-weight:normal;margin-top:10px;">
+            Екатерина теперь моя валентинка 😍
+        </h2>
+    </div>
+
+    <style>
+    @keyframes zoomIn {
+        from {transform:scale(0.5);opacity:0;}
+        to {transform:scale(1);opacity:1;}
+    }
+    .confetti {
+        position: fixed;
+        top: -10px;
+        font-size: 24px;
+        animation: fall linear forwards;
+    }
+    @keyframes fall {
+        to { transform: translateY(110vh) rotate(720deg); }
+    }
+    </style>
     `;
+
+    // Конфетти
+    const emojis = ["💖","💘","💝","❤️","✨"];
+    for(let i=0;i<80;i++){
+        let c = document.createElement("div");
+        c.className="confetti";
+        c.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+        c.style.left = Math.random()*100+"vw";
+        c.style.animationDuration = 3+Math.random()*3+"s";
+        document.body.appendChild(c);
+        setTimeout(()=>c.remove(),6000);
+    }
 });
 
-// сердечки
+// Летающие сердечки на фоне
 setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -190,7 +236,6 @@ setInterval(() => {
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = 4 + Math.random() * 4 + "s";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 8000);
 }, 400);
 </script>
