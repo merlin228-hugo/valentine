@@ -4,86 +4,85 @@ index.html
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Валентинка 💘</title>
 
 <style>
 * {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     margin: 0;
-    font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+    background: linear-gradient(180deg, #ff758c, #ff7eb3);
+    height: 100vh;
     overflow: hidden;
 }
 
 .container {
-    position: relative;
-    z-index: 10;
-    background: white;
-    padding: 30px;
-    border-radius: 25px;
-    max-width: 500px;
-    width: 90%;
-    margin: auto;
-    top: 50%;
-    transform: translateY(-50%);
+    height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 img {
     width: 100%;
+    max-height: 45vh;
+    object-fit: cover;
     border-radius: 20px;
 }
 
 h1 {
-    margin: 20px 0;
+    font-size: 22px;
+    margin: 15px 0;
 }
 
 .buttons {
     position: relative;
-    height: 120px;
+    height: 160px;
 }
 
 button {
     position: absolute;
-    padding: 18px 35px;
+    width: 45%;
+    padding: 18px;
     font-size: 20px;
     border-radius: 50px;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 #yesBtn {
-    background: #ff3366;
+    background: #ff2d55;
     color: white;
-    left: 50%;
-    transform: translateX(-120%);
+    left: 5%;
     animation: pulse 1.2s infinite;
-    z-index: 2;
 }
 
 #noBtn {
-    background: #ccc;
-    left: 50%;
-    transform: translateX(20%);
-    z-index: 1;
+    background: #e0e0e0;
+    color: #333;
+    right: 5%;
 }
 
 @keyframes pulse {
-    0% { transform: translateX(-120%) scale(1); }
-    50% { transform: translateX(-120%) scale(1.1); }
-    100% { transform: translateX(-120%) scale(1); }
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
 }
 
 .heart {
     position: fixed;
-    bottom: -20px;
-    font-size: 24px;
+    bottom: -30px;
+    font-size: 22px;
     animation: fly 6s linear infinite;
+    pointer-events: none;
 }
 
 @keyframes fly {
@@ -97,20 +96,21 @@ button {
 
 <body>
 
-<div class="container" id="card">
+<div class="container">
     <img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif">
+    
     <h1 id="text">Екатерина, ты будешь моей валентинкой? 💖</h1>
 
     <div class="buttons">
-        <button id="yesBtn">ДА</button>
-        <button id="noBtn">НЕТ</button>
+        <button id="yesBtn">ДА 💘</button>
+        <button id="noBtn">НЕТ 🙃</button>
     </div>
 </div>
 
 <script>
 const texts = [
     "Ну давай, мне грустно 😢",
-    "Я старался вообще-то…",
+    "Я же стараюсь…",
     "Ну пожалуйста 🥺",
     "Это судьба 💘",
     "Я без тебя не смогу 😭"
@@ -129,7 +129,7 @@ const text = document.getElementById("text");
 const cat = document.getElementById("cat");
 
 function vibrate() {
-    if (navigator.vibrate) navigator.vibrate(100);
+    if (navigator.vibrate) navigator.vibrate(80);
 }
 
 noBtn.addEventListener("click", () => {
@@ -138,17 +138,19 @@ noBtn.addEventListener("click", () => {
     text.textContent = texts[Math.min(clicks, texts.length - 1)];
     cat.src = cats[Math.min(clicks, cats.length - 1)];
 
-    // кнопка НЕТ убегает
-    noBtn.style.left = Math.random() * 60 + "%";
-    noBtn.style.top = Math.random() * 40 + "px";
-    noBtn.style.transform = "scale(0.9)";
+    // НЕТ убегает
+    noBtn.style.top = Math.random() * 80 + "px";
+    noBtn.style.left = Math.random() * 40 + "%";
+    noBtn.style.right = "auto";
+    noBtn.style.transform = "scale(0.85)";
 
-    // кнопка ДА растёт
-    const scale = 1 + clicks * 0.4;
-    yesBtn.style.transform = `translateX(-120%) scale(${scale})`;
+    // ДА растёт
+    const scale = 1 + clicks * 0.35;
+    yesBtn.style.transform = `scale(${scale})`;
 
     clicks++;
 
+    // финал: ДА на весь экран
     if (clicks > 4) {
         noBtn.style.display = "none";
         yesBtn.style.position = "fixed";
@@ -156,8 +158,8 @@ noBtn.addEventListener("click", () => {
         yesBtn.style.left = 0;
         yesBtn.style.width = "100vw";
         yesBtn.style.height = "100vh";
-        yesBtn.style.fontSize = "48px";
         yesBtn.style.borderRadius = "0";
+        yesBtn.style.fontSize = "36px";
     }
 });
 
@@ -169,12 +171,12 @@ yesBtn.addEventListener("click", () => {
             justify-content:center;
             align-items:center;
             text-align:center;
-            background:linear-gradient(135deg,#ff758c,#ff7eb3);
+            padding:20px;
+            background:linear-gradient(180deg,#ff758c,#ff7eb3);
             color:white;
-            font-size:36px;
-            font-family:Arial;
+            font-size:28px;
         ">
-            💘 УРААА 💘<br>
+            💘 УРААА 💘<br><br>
             Ты моя валентинка 😍
         </div>
     `;
@@ -190,7 +192,7 @@ setInterval(() => {
     document.body.appendChild(heart);
 
     setTimeout(() => heart.remove(), 8000);
-}, 300);
+}, 400);
 </script>
 
 </body>
